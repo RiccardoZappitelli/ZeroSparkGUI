@@ -1,0 +1,25 @@
+{
+  "ZeroSparkVersion": 1,
+  "CharacterLabel": {
+    "CreateCharacter(CharacterLabel)": {
+      "NewCharacterID": "",
+      "BaseCharacterID": "",
+      "UnlockType": "Default",
+      "CloneCostumes": true,
+      "Name": "",
+      "FormName": "",
+      "SamePerson": "",
+      "CopyRosterPosition": ""
+    },
+
+    "CustomizeCharacter(CharacterLabel)": {
+      "TargetCharacterID": "",
+      "AuraFX": "",
+      "Skill1": "",
+      "Skill2": "",
+      "Blast1": "",
+      "Blast2": "",
+      "Ultimate": ""
+    }
+  }
+}
