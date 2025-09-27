@@ -1,6 +1,8 @@
 import json
 import pandas as pd
 import customtkinter as ctk
+from tkinter import messagebox
+from tkinter import filedialog
 from CTkScrollableDropdown import CTkScrollableDropdown
 
 datasheet_filename = "ids.xlsx"
@@ -12,6 +14,7 @@ sheets = {sheet_name:dfs.parse(sheet_name) for sheet_name in dfs.sheet_names}
 characters_sheet = sheets["Characters"]
 characters_dict = {character[0]:character[1] for character in characters_sheet.values}
 all_characters = list(characters_dict.keys())
+id_to_character = {v:k for k,v in characters_dict.items()}
 
 label_placeholder = "CharacterLabel"
 create_character_placeholder = f"CreateCharacter({label_placeholder})"
@@ -43,7 +46,6 @@ class GUI:
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_rowconfigure(1, weight=1)
-
 
         #CHARACTER CREATION
         self.characterCreationFrame = ctk.CTkFrame(self.root)
@@ -148,12 +150,71 @@ class GUI:
         self.create_button = ctk.CTkButton(self.characterCustomizationFrame, text="Create", command=self.create)
         self.create_button.grid(row=5, column=0, padx=12, pady=12)
 
+        self.load_button = ctk.CTkButton(self.characterCustomizationFrame, text="Load", command=self.load)
+        self.load_button.grid(row=5, column=1, padx=12, pady=12)
+
         self.characterCreationFrame.grid_columnconfigure((0,1,2,3), weight=1)
         self.characterCustomizationFrame.grid_columnconfigure((0,1,2,3), weight=1)
 
         self.root.mainloop()
 
-    def getData(self) -> None:
+    def load(self) -> None:
+        with filedialog.askopenfile(filetypes=[("JSON Files", "*.json")]) as fi:
+            var = json.load(fi)
+        print(var)
+        self.setData(var)
+
+    def set_entry_text(self, entry: ctk.CTkEntry, text: str) -> None:
+        entry.delete(0, "end")
+        entry.insert(0, text)
+
+    def setData(self, data: dict) -> None:
+        label = list(data.items())[1][0]
+        character_dictionary = data[label]
+
+        # Character Creation
+        createCharacterDictionary = character_dictionary[f"CreateCharacter({label})"]
+        newcharacterID = createCharacterDictionary["NewCharacterID"]
+        basecharacterID = createCharacterDictionary["BaseCharacterID"]
+        name = createCharacterDictionary["Name"]
+        formname = createCharacterDictionary["FormName"]
+        roasterposition = createCharacterDictionary["CopyRosterPosition"]
+
+        # Customize Character
+        customizeCharacterDictionary = character_dictionary[f"CustomizeCharacter({label})"]
+        aurafx = customizeCharacterDictionary["AuraFX"]
+        skill1 = customizeCharacterDictionary["Skill1"]
+        skill2 = customizeCharacterDictionary["Skill2"]
+
+        blast1 = customizeCharacterDictionary["Blast1"]
+        blast2 = customizeCharacterDictionary["Blast2"]
+
+        ultimate = customizeCharacterDictionary["Ultimate"]
+
+        self.set_entry_text(self.characterLabelEntry, label)
+        self.set_entry_text(self.newCharacterIDEntry, newcharacterID)
+        self.set_entry_text(self.baseCharacterIDEntry, id_to_character[basecharacterID])
+
+        self.set_entry_text(self.characterNameEntry, name)
+        self.set_entry_text(self.formNameEntry,formname)
+
+        self.set_entry_text(self.rosterPositionEntry, id_to_character[roasterposition])
+        self.set_entry_text(self.aurafxEntry, id_to_character[aurafx])
+
+        self.set_entry_text(self.skill1Entry, id_to_character[skill1])
+        self.set_entry_text(self.skill2Entry, id_to_character[skill2])
+
+        self.set_entry_text(self.blast1Entry, id_to_character[blast1])
+        self.set_entry_text(self.blast2Entry, id_to_character[blast2])
+
+        self.set_entry_text(self.ultimateEntry, id_to_character[ultimate])
+
+        if "AlwaysAuraKey" in customizeCharacterDictionary.keys():
+            self.auraAlwaysOnEntry.select()
+        else:
+            self.auraAlwaysOnEntry.deselect()
+
+    def getData(self) -> tuple[dict, str]:
         label = self.characterLabelEntry.get()
         name = self.characterNameEntry.get()
         formname = self.formNameEntry.get()
@@ -186,7 +247,6 @@ class GUI:
         ultimate = self.ultimateEntry.get()
         ultimate = characters_dict[ultimate]
 
-        print(template)
         template[label] = template[label_placeholder]
         del template[label_placeholder]
 
@@ -223,9 +283,15 @@ class GUI:
         return template, f"{label.capitalize()}.json"
 
     def create(self) -> None:
-        data, filename = self.getData()
-        with open(filename, "w", encoding="utf-8") as fo:
-            json.dump(data, fo)
+        try:
+            data, filename = self.getData()
+            with open(filename, "w", encoding="utf-8") as fo:
+                json.dump(data, fo)
+        except OSError:
+            messagebox.showerror("Could not create file", "Could not create file couse of permission error.")
+
+        else:
+            messagebox.showinfo("Succes", f"{filename} successfully created! Enjoy!")
 
 if __name__ == "__main__":
     gui=GUI()
