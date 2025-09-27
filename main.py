@@ -3,7 +3,7 @@ import pandas as pd
 import customtkinter as ctk
 from CTkScrollableDropdown import CTkScrollableDropdown
 
-datasheet_filename = "Sparking Zero ID List.xlsx"
+datasheet_filename = "ids.xlsx"
 template_filename = "template.json"
 
 dfs = pd.ExcelFile(datasheet_filename)
