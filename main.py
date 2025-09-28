@@ -90,7 +90,7 @@ class GUI:
 
         self.rosterPositionEntry = ctk.CTkEntry(self.characterCreationFrame)
         self.rosterPositionEntry.grid(row=3, column=3, pady=12, padx=12)
-        CTkScrollableDropdown(attach=self.rosterPositionEntry, values=all_characters, width=300)
+        CTkScrollableDropdown(attach=self.rosterPositionEntry, values=all_characters, width=300, autocomplete=True)
 
         #CHARACTER CUSTOMIZATION
         self.characterCustomizationFrame = ctk.CTkFrame(self.root)
@@ -104,7 +104,7 @@ class GUI:
 
         self.aurafxEntry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.aurafxEntry.grid(row=1, column=1, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.aurafxEntry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.aurafxEntry, values=all_characters, width=150, autocomplete=True)
 
         self.auraAlwaysOnLabel = ctk.CTkLabel(self.characterCustomizationFrame, text="AuraAlwaysOn")
         self.auraAlwaysOnLabel.grid(row=1, column=2, padx=12, pady=12)
@@ -117,35 +117,35 @@ class GUI:
 
         self.skill1Entry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.skill1Entry.grid(row=2, column=1, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.skill1Entry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.skill1Entry, values=all_characters, width=150, autocomplete=True)
 
         self.skill2Label = ctk.CTkLabel(self.characterCustomizationFrame, text="Skill2")
         self.skill2Label.grid(row=2, column=2, padx=12, pady=12)
 
         self.skill2Entry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.skill2Entry.grid(row=2, column=3, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.skill2Entry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.skill2Entry, values=all_characters, width=150, autocomplete=True)
 
         self.blast1Label = ctk.CTkLabel(self.characterCustomizationFrame, text="Blast1")
         self.blast1Label.grid(row=3, column=0, padx=12, pady=12)
 
         self.blast1Entry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.blast1Entry.grid(row=3, column=1, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.blast1Entry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.blast1Entry, values=all_characters, width=150, autocomplete=True)
 
         self.blast2Label = ctk.CTkLabel(self.characterCustomizationFrame, text="Blast2")
         self.blast2Label.grid(row=3, column=2, padx=12, pady=12)
 
         self.blast2Entry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.blast2Entry.grid(row=3, column=3, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.blast2Entry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.blast2Entry, values=all_characters, width=150, autocomplete=True)
 
         self.ultimateLabel = ctk.CTkLabel(self.characterCustomizationFrame, text="Ultimate")
         self.ultimateLabel.grid(row=4, column=2, padx=12, pady=12)
 
         self.ultimateEntry = ctk.CTkEntry(self.characterCustomizationFrame) 
         self.ultimateEntry.grid(row=4, column=3, padx=12, pady=12)
-        CTkScrollableDropdown(attach=self.ultimateEntry, values=all_characters, width=150)
+        CTkScrollableDropdown(attach=self.ultimateEntry, values=all_characters, width=150, autocomplete=True)
 
         self.create_button = ctk.CTkButton(self.characterCustomizationFrame, text="Create", command=self.create)
         self.create_button.grid(row=5, column=0, padx=12, pady=12)
